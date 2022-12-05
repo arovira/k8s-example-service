@@ -55,7 +55,7 @@ This project uses `pytest
 
 To run all the tests of a project, simply run the ``pytest`` command: ::
 
-    
+
    $ pytest
    ================================================= test session starts =================================================
    platform darwin -- Python 3.10.8, pytest-7.2.0, pluggy-1.0.0
