@@ -1,0 +1,13 @@
+{{- if .Values.pdb.enabled }}
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "fastapi-k8s-example-app.fullname" . }}
+  labels:
+    {{- include "fastapi-k8s-example-app.labels" . | nindent 4 }}
+spec:
+  minAvailable: {{ .Values.pdb.minReplicas }}
+  selector:
+    matchLabels:
+      {{- include "fastapi-k8s-example-app.selectorLabels" . | nindent 6 }}
+{{- end }}
