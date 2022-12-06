@@ -12,7 +12,7 @@ To run the web application in debug use::
 
    uvicorn app.main:app --reload
 
-Application will be available on `localhost<https://localhost:8000/docs>`_  in your browser.
+Application will be available on [localhost](ttps://localhost:8000/docs) in your browser.
 
 
 Run tests
@@ -21,12 +21,11 @@ Run tests
 Tests for this project are defined in the ``tests/`` folder.
 
 
-This project uses `pytest<https://docs.pytest.org/>`_ to define tests because it allows you to use the ``assert`` keyword with good formatting for failed assertations.
+This project uses [pytest](https://docs.pytest.org/) to define tests because it allows you to use the ``assert`` keyword with good formatting for failed assertations.
 
 
-To run all the tests of a project, simply run the ``pytest`` command::
-
-
+To run all the tests of a project, simply run the ``pytest`` command:
+::
    $ pytest
    ================================================= test session starts =================================================
    platform darwin -- Python 3.10.8, pytest-7.2.0, pluggy-1.0.0
@@ -40,17 +39,17 @@ To run all the tests of a project, simply run the ``pytest`` command::
    $
 
 
-If you want to run a specific test, you can do this with `this<https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests>`_ pytest feature::
-
+If you want to run a specific test, you can do this with [this](https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests) pytest feature:
+::
    $ pytest src/tests/test_main.py
 
 Local deployment with Docker Compose
 ------------------------------------
 
 You must have ``docker`` and ``docker-compose`` tools installed to work with material in this section.
-Then just run::
-
-   docker-compose up --build
+Then just run:
+::
+   $ docker-compose up --build
 
 Application will be available on ``localhost`` in your browser.
 
@@ -64,8 +63,8 @@ Project structure
 -----------------
 
 Files related to application are in the ``app`` or ``tests`` directories.
-Application parts are::
-
+Application parts are:
+::
    app
    ├── api
    │   └── api.py       - web routes.
@@ -84,32 +83,39 @@ Helm deployment to k8s
 In order to deploy to kubernetes, the service image needs to be available on an image repository
 Since this example uses AWS resources, we will create the ECR repository.
 
-First step is to define some variables we will use related to your AWS account::
+First step is to define some variables we will use related to your AWS account:
+::
    export TF_VAR_aws_region=<change to your region>
    export TF_VAR_aws_profile=<change to your aws_profile>
    export TF_VAR_aws_account_id=<change to your aws_profile>
 
-Execute the following to create it::
+Execute the following to create it:
+::
    cd deploy/terraform/environment
    terraform init
    terraform apply
 
-Note this uses a terraform module developed on git@github.com:arovira/tfm-aws-ecr-repository.git
+Note this uses a terraform module developed on [git@github.com:arovira/tfm-aws-ecr-repository.git](https://github.com/arovira/tfm-aws-ecr-repository)
 
-Then get the ECR repo name::
+Then get the ECR repo name:
+::
    export $(terraform output | sed 's/ //g')
 
-Then, go back to the root of the project and build the image (you need docker to do so)::
+Then, go back to the root of the project and build the image (you need docker to do so):
+::
    cd ../..
    docker build . --tag fastapi-k8s-example-image
 
-Then, authenticate on the ECR repo and push the image::
+Then, authenticate on the ECR repo and push the image:
+::
    aws ecr get-login-password --region $TF_VAR_aws_region --profile ${TF_VAR_aws_profile} | docker login --username AWS --password-stdin ${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com
    docker tag fastapi-k8s-example-image ${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com/fastapi-k8s-example-app:0.1.0
    docker push ${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com/fastapi-k8s-example-app:latest
 
-Then set your kubernetes context and install via helm::
+Then set your kubernetes context and install via helm:
+::
    helm upgrade --install fastapi-example deploy/helm/fastapi-k8s-example-app --set image.repository=${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com/fastapi-k8s-example-app
 
-If ingress is not enabled, you can access the application with on localhost:8888 after::
+If ingress is not enabled, you can access the application with on localhost:8888 after:
+::
    kubectl port-forward svc/fastapi-example-fastapi-k8s-example-app 8888:80
