@@ -12,7 +12,7 @@ To run the web application in debug use::
 
    uvicorn app.main:app --reload
 
-Application will be available on `localhost<https://localhost:8000/docs>`_ in your browser.
+Application will be available on `localhost <https://localhost:8000/docs>`_ in your browser.
 
 
 Run tests
@@ -20,7 +20,7 @@ Run tests
 
 Tests for this project are defined in the ``tests/`` folder.
 
-This project uses `pytest<https://docs.pytest.org/>`_ to define tests because it allows you to use the ``assert`` keyword with good formatting for failed assertations.
+This project uses `pytest <https://docs.pytest.org/>`_ to define tests because it allows you to use the ``assert`` keyword with good formatting for failed assertations.
 
 To run all the tests of a project, simply run the ``pytest`` command:
 ::
@@ -37,7 +37,7 @@ To run all the tests of a project, simply run the ``pytest`` command:
    $
 
 
-If you want to run a specific test, you can do this with `this<https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests>`_ pytest feature:
+If you want to run a specific test, you can do this with `this <https://docs.pytest.org/en/latest/usage.html#specifying-tests-selecting-tests>`_ pytest feature:
 ::
    $ pytest src/tests/test_main.py
 
@@ -96,7 +96,7 @@ Execute the following to create it:
    terraform init
    terraform apply
 
-Note this uses a terraform module developed on `git@github.com:arovira/tfm-aws-ecr-repository.git<https://github.com/arovira/tfm-aws-ecr-repository>`_
+Note this uses a terraform module developed on `git@github.com:arovira/tfm-aws-ecr-repository.git <https://github.com/arovira/tfm-aws-ecr-repository>`_
 
 Then get the ECR repo name:
 ::
