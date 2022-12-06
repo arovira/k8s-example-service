@@ -9,7 +9,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     pip install poetry==1.2.2
 
-COPY src/ /app
+COPY . /app
 WORKDIR /app
 
 RUN poetry install
