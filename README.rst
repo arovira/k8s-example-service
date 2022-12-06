@@ -12,7 +12,7 @@ To run the web application in debug use::
 
    uvicorn app.main:app --reload
 
-Application will be available on `localhost <https://localhost:8000/docs>`_ in your browser.
+Application will be available on `localhost <http://localhost:8000/docs>`_ in your browser.
 
 
 Run tests
@@ -109,13 +109,14 @@ Then, go back to the root of the project and build the image (you need docker to
 
 Then, authenticate on the ECR repo and push the image:
 ::
-   aws ecr get-login-password --region $TF_VAR_aws_region --profile ${TF_VAR_aws_profile} | docker login --username AWS --password-stdin ${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com
-   docker tag fastapi-k8s-example-image ${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com/fastapi-k8s-example-app:0.1.0
-   docker push ${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com/fastapi-k8s-example-app:latest
+   aws_ecr_base=${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com
+   aws ecr get-login-password --region $TF_VAR_aws_region --profile ${TF_VAR_aws_profile} | docker login --username AWS --password-stdin ${aws_ecr_base}
+   docker tag fastapi-k8s-example-image ${aws_ecr_base}/fastapi-k8s-example-app:0.1.0
+   docker push ${aws_ecr_base}/fastapi-k8s-example-app:latest
 
 Then set your kubernetes context and install via helm:
 ::
-   helm upgrade --install fastapi-example deploy/helm/fastapi-k8s-example-app --set image.repository=${TF_VAR_aws_account_id}.dkr.ecr.${TF_VAR_aws_region}.amazonaws.com/fastapi-k8s-example-app
+   helm upgrade --install fastapi-example deploy/helm/fastapi-k8s-example-app --set image.repository=${aws_ecr_base}/fastapi-k8s-example-app
 
 If ingress is not enabled, you can access the application with on localhost:8888 after:
 ::
