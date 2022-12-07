@@ -4,10 +4,10 @@ variable "app" {
   default = "fastapi-k8s-example-app"
 }
 variable "aws_region" {
-  type    = string
+  type        = string
   description = "AWS region to create resources"
 }
 variable "aws_profile" {
-  type    = string
+  type        = string
   description = "AWS profile to authenticate"
 }
